@@ -6,6 +6,8 @@ This is a Node.js app that uses Salesforce and Webex Oauth to sync contacts from
 
 This project creates a locally running Node.js web server which lets you sign using a Webex Integration OAuth redirect URL flow. It then sets up a cron job to continually refresh the access token. In example, the project refreshes the token ever 24 hours.
 
+Project then uses the access token to sync contacts from Salesforce to Webex.
+
 
 ## Setup
 
@@ -22,38 +24,61 @@ This project creates a locally running Node.js web server which lets you sign us
 1. Clone this repository and change directory:
 
    ```
-   git clone https://github.com/wxsd-sales/nodejs-integration-refresher.git && cd nodejs-integration-refresher
+   git clone https://github.com/sieteunoseis/salesforce-webex-contact-sync.git && cd salesforce-webex-contact-sync
    ```
 
 2. Rename the example environment file from `.env.example` to `.env`:
    ```
    cp .env.example .env
    ```
-3. Configure the environment file with the Webex OAuth Integration ``CLIENT_ID``, ``CLIENT_SECRET`` and ``SCOPES`` details and save. 
+3. Configure the environment file with the Webex OAuth Integration.
    *Additional guide on where to get these values is below*
 
    ```env
-   CLIENT_ID=<CLIENT_ID>
-   CLIENT_SECRET=<CLIENT_SECRET>
-   REDIRECT_URL=http://localhost:3000/oauth
-   AUTHORIZATION_URL=https://webexapis.com/v1/authorize
-   TOKEN_URL=https://webexapis.com/v1/access_token
-   SCOPES=spark:all spark-admin:devices_read
-   PORT=3000
+   SALESFORCE_CLIENT_ID=<CLIENT_ID>
+   SALESFORCE_CLIENT_SECRET=<CLIENT_SECRET>
+   SALESFORCE_USERNAME=<USERNAME>
+   SALESFORCE_PASSWORD=<PASSWORD>
+   SALESFORCE_SECURITYTOKEN=<SECURITY_TOKEN>
+   WEBEX_ORG_ID=<ORG_ID>
+   WEBEX_APP_CLIENT_ID=<CLIENT_ID>
+   WEBEX_APP_CLIENT_SECRET=<CLIENT_SECRET>
+   WEBEX_APP_REDIRECT_URL=http://localhost:3000/oauth
+   WEBEX_APP_AUTHORIZATION_URL=https://webexapis.com/v1/authorize
+   WEBEX_APP_TOKEN_URL=https://webexapis.com/v1/access_token
+   WEBEX_APP_SCOPES=Identity:contact
    ```
 4. Install project:
    ```
    npm install
    ```
-5. Start the server:
+5. Start the server in development mode:
    ```
-   npm start
+   npm run dev
+   ```
+   or start the server in production mode:
+   
+   ```
+   npm run test
    ```
 
 6. Navigate using your browser to the link below to begin the OAuth flow which will give this project a refresh and access token based off your Webex Account:
    ```
    http://localhost:3000/oauth
    ```
+
+#### Build and run using Docker:
+
+```
+npm run docker:build
+npm run docker:run
+```
+
+#### Pull image from Docker.io and run with the following::
+
+```
+docker run -d -p 3000:3000 --name salesforce-webex-sync --restart=always --env-file=.env sieteunoseis/salesforce-webex-contact-sync:latest
+```
 
 #### Setup Webex OAuth Integration:
 
@@ -65,26 +90,18 @@ This project creates a locally running Node.js web server which lets you sign us
 4. Fill out your intergration details, enter any name and decription and select any icon:
    - For Redirect URI(s), enter: http://localhost:3000/oauth
       (or the url where you intend to deploy this code.  The app expects the url to end in ``/oauth``)
-   - For scopes, select only ``spark:all``
+   - For scopes, select only ``Identity:contact``
       (or the scopes you intend to use for your integration)
-      If you do not select ``spark:all``, ``spark:people_read`` is required for this demo.
 5. Scroll to the bottom and click Add Integration.
 6. Take a note of the Client ID and Client Secret for the environment file configuration above
-
-
-## Demo
-
-*For more demos & PoCs like this, check out our [Webex Labs site](https://collabtoolbox.cisco.com/webex-labs).
 
 ## License
 
 All contents are licensed under the MIT license. Please see [license](LICENSE) for details.
 
 
-## Disclaimer
-  
-Everything included is for demo and Proof of Concept purposes only. Use of the site is solely at your own risk. This site may contain links to third party content, which we do not warrant, endorse, or assume liability for. These demos are for Cisco Webex use cases, but are not Official Cisco Webex Branded demos.
+## Giving Back
 
+If you would like to support my work and the time I put in creating the code, you can click the image below to get me a coffee. I would really appreciate it (but is not required).
 
-## Questions
-Please contact the WXSD team at [wxsd@external.cisco.com](mailto:wxsd@external.cisco.com?subject=nodejs-integration-refresher) for questions. Or, if you're a Cisco internal employee, reach out to us on the Webex App via our bot (globalexpert@webex.bot). In the "Engagement Type" field, choose the "API/SDK Proof of Concept Integration Development" option to make sure you reach our team. 
+[Buy Me a Coffee](https://www.buymeacoffee.com/automatebldrs)

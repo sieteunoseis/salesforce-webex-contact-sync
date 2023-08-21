@@ -4,7 +4,7 @@
   "main": "app.js",
   "scripts": {
     "start": "NODE_ENV=production node app.js",
-    "test": "NODE_ENV=test nodemon app.js",
+    "dev": "NODE_ENV=development nodemon app.js",
     "port": "lsof -i tcp:3000",
     "docker:build": "docker build --platform $npm_package_config_docker_platform -t $npm_package_config_docker_username/$npm_package_config_docker_name:$npm_package_version -t $npm_package_config_docker_username/$npm_package_config_docker_name:latest .",
     "docker:push": "docker push $npm_package_config_docker_username/$npm_package_config_docker_name:$npm_package_version && docker push $npm_package_config_docker_username/$npm_package_config_docker_name:latest",

@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+    salesforce-webex-contact-sync:
+      container_name: salesforce-webex-contact-sync
+      restart: always
+      image: sieteunoseis/salesforce-webex-contact-sync:latest
+      ports:
+        - "3000:3000"
+      environment:
+        - SALESFORCE_CLIENT_ID=<CLIENT_ID>
+        - SALESFORCE_CLIENT_SECRET=<CLIENT_SECRET>
+        - SALESFORCE_USERNAME=<USERNAME>
+        - SALESFORCE_PASSWORD=<PASSWORD>
+        - SALESFORCE_SECURITYTOKEN=<SECURITY_TOKEN>
+        - WEBEX_ORG_ID=<ORG_ID>
+        - WEBEX_APP_CLIENT_ID=<CLIENT_ID>
+        - WEBEX_APP_CLIENT_SECRET=<CLIENT_SECRET>
+        - WEBEX_APP_REDIRECT_URL=http://localhost:3000/oauth
+        - WEBEX_APP_AUTHORIZATION_URL=https://webexapis.com/v1/authorize
+        - WEBEX_APP_TOKEN_URL=https://webexapis.com/v1/access_token
+        - WEBEX_APP_SCOPES=Identity:contact

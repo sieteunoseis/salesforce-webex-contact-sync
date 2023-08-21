@@ -1,0 +1,204 @@
+body {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    font-family: "Raleway", sans-serif;
+  }
+  
+  /* Bootstrap overrides for buttons */
+  
+  .btn:focus {
+    box-shadow: none !important;
+  }
+  
+  *:focus {
+    box-shadow: none !important;
+  }
+  
+   /* Alert Customization */
+  
+  .toast {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    border-radius: 12px;
+    background: #fff;
+    padding: 20px 35px 20px 25px;
+    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transform: translateX(calc(100% + 150px));
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.35);
+  }
+  
+  .toast.active {
+    transform: translateX(0%);
+  }
+  
+  .toast .toast-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .toast-content .check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    min-width: 35px;
+    background-color: #4070f4;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 50%;
+  }
+  
+  .toast-content .error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    min-width: 35px;
+    background-color: red;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 50%;
+  }
+  
+  .toast-content .message {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+  }
+  
+  .message .text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666666;
+  }
+  
+  .message .text.text-1 {
+    font-weight: 600;
+  }
+  
+  .toast .closeAlert {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  
+  .toast .closeAlert:hover {
+    opacity: 1;
+  }
+  
+  .toast .progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+  }
+  
+  .toast .progress:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #4070f4;
+  }
+  
+  .toast:not(.show){
+    display: inline !important;
+  }
+  
+  .progress.active:before {
+    animation: progress 5s linear forwards;
+  }
+  
+  @keyframes progress {
+    100% {
+      right: 100%;
+    }
+  }
+  
+  #closeAlert {
+    padding: 0;
+    border: none;
+    background: none;
+  }
+  
+  /* Handsontable Customization */
+  
+  #handsontable {
+    overflow: hidden !important;
+  }
+  
+  .handsontable .truncated {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* === BASE HEADING === */
+  
+  h1 {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: 40px;
+    color: #080808;
+    -webkit-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+  }
+  
+  h1 span {
+    display: block;
+    font-size: 0.5em;
+    line-height: 1.3;
+  }
+  h1 em {
+    font-style: normal;
+    font-weight: 600;
+  }
+  
+  .section-title h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+    margin: auto;
+    white-space: nowrap;
+    padding-bottom: 13px;
+  }
+  .section-title h1:before {
+    background-color: #c50000;
+    content: "";
+    display: block;
+    height: 3px;
+    width: 75px;
+    margin-bottom: 5px;
+  }
+  .section-title h1:after {
+    background-color: #c50000;
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    width: 75px;
+    margin-bottom: 0.25em;
+  }
+  
+  .comments{
+    color: red;
+  }

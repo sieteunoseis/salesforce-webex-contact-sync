@@ -1,0 +1,38 @@
+{
+  "name": "salesforce-webex-contact-sync",
+  "version": "1.2.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_ENV=production node app.js",
+    "test": "NODE_ENV=test nodemon app.js",
+    "port": "lsof -i tcp:3000",
+    "docker:build": "docker build --platform $npm_package_config_docker_platform -t $npm_package_config_docker_username/$npm_package_config_docker_name:$npm_package_version -t $npm_package_config_docker_username/$npm_package_config_docker_name:latest .",
+    "docker:push": "docker push $npm_package_config_docker_username/$npm_package_config_docker_name:$npm_package_version && docker push $npm_package_config_docker_username/$npm_package_config_docker_name:latest",
+    "docker:run": "docker run -d -p 3000:3000 --name $npm_package_config_docker_name --restart=always --env-file=.env $npm_package_config_docker_username/$npm_package_name:$npm_package_version",
+    "docker:compose": "docker-compose up -d",
+    "docker:remove": "docker stop $npm_package_config_docker_name && docker rm $npm_package_config_docker_name",
+    "docker:prune": "docker system prune -a"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "codemirror": "^6.0.1",
+    "console-stamp": "^3.1.2",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.9",
+    "envalid": "^7.3.1",
+    "express": "^4.17.1",
+    "nforce": "^1.13.0",
+    "node-cron": "^3.0.0",
+    "nodemon": "^3.0.1",
+    "phone": "^3.1.39",
+    "socket.io": "^4.7.2"
+  },
+  "config": {
+    "docker_username": "sieteunoseis",
+    "docker_platform": "linux/amd64",
+    "docker_name": "salesforce-webex-contact-sync"
+  }
+}

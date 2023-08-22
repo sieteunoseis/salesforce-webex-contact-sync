@@ -35,10 +35,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get('/', function(req, res, next) {
   if (integrationAuthentication == null){
     res.render('index', { title: 'Salesforce to Webex Contact Sync', integrationAuthentication: false  });
-    sendMessage("Not authenticated.");
   }else{
     res.render('index', { title: 'Salesforce to Webex Contact Sync', integrationAuthentication: true  });
-    sendMessage("Authentication Successful!");
   }
 });
 
@@ -132,7 +130,7 @@ function refreshMessage(message) {
   io.emit('response', { message: new Date().toLocaleString().concat(' - ').concat(message) });
 }
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+server.listen(3010, () => {
+  console.log('listening on *:3010');
 });
 

@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Export port 3000
-EXPOSE 3000
+EXPOSE 3010
 
 # Start Node.js
 CMD ["npm", "start"]

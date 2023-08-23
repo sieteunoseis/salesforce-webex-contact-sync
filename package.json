@@ -1,6 +1,6 @@
 {
   "name": "salesforce-webex-contact-sync",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "main": "app.js",
   "scripts": {
     "start": "NODE_ENV=production node app.js",
@@ -8,7 +8,7 @@
     "port": "lsof -i tcp:3000",
     "docker:build": "docker build --platform $npm_package_config_docker_platform -t $npm_package_config_docker_username/$npm_package_config_docker_name:$npm_package_version -t $npm_package_config_docker_username/$npm_package_config_docker_name:latest .",
     "docker:push": "docker push $npm_package_config_docker_username/$npm_package_config_docker_name:$npm_package_version && docker push $npm_package_config_docker_username/$npm_package_config_docker_name:latest",
-    "docker:run": "docker run -d -p 3000:3000 --name $npm_package_config_docker_name --restart=always --env-file=.env $npm_package_config_docker_username/$npm_package_name:$npm_package_version",
+    "docker:run": "docker run -d -p 3000:3000 --name $npm_package_config_docker_name --restart=always --env-file=.env -v ./data:/app/data $npm_package_config_docker_username/$npm_package_name:$npm_package_version",
     "docker:compose": "docker-compose up -d",
     "docker:remove": "docker stop $npm_package_config_docker_name && docker rm $npm_package_config_docker_name",
     "docker:prune": "docker system prune -a"

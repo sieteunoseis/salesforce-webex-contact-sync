@@ -87,7 +87,7 @@ Note: Update the config section of the package.json file to change the name and 
 #### Pull image from Docker.io and run with the following::
 
 ```
-docker run -d -p 3000:3000 --name salesforce-webex-sync --restart=always --env-file=.env sieteunoseis/salesforce-webex-contact-sync:latest
+docker run -d -p 3000:3000 --name salesforce-webex-sync --restart=always --env-file=.env-v ./data:/app/data sieteunoseis/salesforce-webex-contact-sync:latest
 ```
 
 #### Setup Webex OAuth Integration:

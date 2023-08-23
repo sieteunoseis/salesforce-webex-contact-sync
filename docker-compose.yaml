@@ -22,3 +22,5 @@ services:
         - WEBEX_APP_TOKEN_URL=https://webexapis.com/v1/access_token
         - WEBEX_APP_SCOPES=Identity:contact
         - PORT=3000
+      volumes:
+        - ./data:/app/data

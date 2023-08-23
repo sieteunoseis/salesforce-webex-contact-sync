@@ -1,4 +1,4 @@
-const { cleanEnv, str, url } = require("envalid");
+const { cleanEnv, str, url, port } = require("envalid");
 
 const env = cleanEnv(process.env, {
   SALESFORCE_CLIENT_ID: str({
@@ -25,6 +25,9 @@ const env = cleanEnv(process.env, {
   WEBEX_APP_CLIENT_SECRET: str({
     desc: "Webex Integration Client Secret."
   }),
+  WEBEX_APP_RETURN_URL: url({
+    desc: "One or more URIs that a user will be returned to when logging out of Webex OAuth."
+  }),
   WEBEX_APP_REDIRECT_URL: url({
     desc: "One or more URIs that a user will be redirected to when completing an OAuth grant flow. This needs to match your Integration Redirect URL."
   }),
@@ -34,7 +37,8 @@ const env = cleanEnv(process.env, {
   WEBEX_APP_TOKEN_URL: url({
     desc: "Resource server to exchange an authorization code for an access token to use with Webex REST API", default: 'https://webexapis.com/v1/access_token'
   }),
-  WEBEX_APP_SCOPES: str({ desc: "Space-delimited list of scopes that identify the resources that your integration can access on behalf of the user. For example: spark:all spark:kms" })
+  WEBEX_APP_SCOPES: str({ desc: "Space-delimited list of scopes that identify the resources that your integration can access on behalf of the user. For example: spark:all spark:kms" }),
+  PORT: port({ desc: "Port to run the application on.", default: 3000 })
 });
 
 exports.env = env;

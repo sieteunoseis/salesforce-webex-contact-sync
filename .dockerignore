@@ -1,3 +1,4 @@
 #.dockerignore 
 .env
 env.sample
+screenshots

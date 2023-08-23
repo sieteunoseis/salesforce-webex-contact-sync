@@ -4,7 +4,7 @@ This is a Node.js app that uses Salesforce and Webex Oauth to sync contacts from
 
 ## Overview
 
-This project creates a locally running Node.js web server which lets you sign using a Webex Integration OAuth redirect URL flow. It then sets up a cron job to continually refresh the access token. In example, the project refreshes the token ever 24 hours.
+This project creates a locally running Node.js web server which lets you authenticate using a Webex Integration OAuth redirect URL flow. It then sets up a cron job to continually refresh the access token. In example, the project refreshes the token ever 24 hours.
 
 Project then uses the access token to sync contacts from Salesforce to Webex.
 
@@ -13,12 +13,14 @@ Project then uses the access token to sync contacts from Salesforce to Webex.
 
 ### Prerequisites & Dependencies: 
 
-- Node 16
+- Node 16+
 - Webex User Account
 - Webex OAuth Integration - Guide provided below
    - Additional information available here: https://developer.webex.com/docs/integrations
-
-
+- Salesforce User Account
+- Salesforce OAuth Integration - Guide provided below
+   - Additional information available here: https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_understanding_authentication.htm
+   
 ### Installation Steps:
 
 1. Clone this repository and change directory:
@@ -31,7 +33,7 @@ Project then uses the access token to sync contacts from Salesforce to Webex.
    ```
    cp .env.example .env
    ```
-3. Configure the environment file with the Webex OAuth Integration.
+3. Configure the environment file for the Salesforce/Webex OAuth Integration.
    *Additional guide on where to get these values is below*
 
    ```env
@@ -43,29 +45,33 @@ Project then uses the access token to sync contacts from Salesforce to Webex.
    WEBEX_ORG_ID=<ORG_ID>
    WEBEX_APP_CLIENT_ID=<CLIENT_ID>
    WEBEX_APP_CLIENT_SECRET=<CLIENT_SECRET>
+   WEBEX_APP_RETURN_URL=http://localhost:3000
    WEBEX_APP_REDIRECT_URL=http://localhost:3000/oauth
    WEBEX_APP_AUTHORIZATION_URL=https://webexapis.com/v1/authorize
    WEBEX_APP_TOKEN_URL=https://webexapis.com/v1/access_token
    WEBEX_APP_SCOPES=Identity:contact
+   PORT=3000
    ```
 4. Install project:
    ```
    npm install
    ```
-5. Start the server in development mode:
+5. Start the server in development mode (using a local env file):
    ```
    npm run dev
    ```
    or start the server in production mode:
    
    ```
-   npm run test
+   npm run start
    ```
 
 6. Navigate using your browser to the link below to begin the OAuth flow which will give this project a refresh and access token based off your Webex Account:
    ```
-   http://localhost:3000/oauth
+   http://localhost:3000
    ```
+
+### Docker Setup:
 
 #### Build and run using Docker:
 
@@ -73,6 +79,10 @@ Project then uses the access token to sync contacts from Salesforce to Webex.
 npm run docker:build
 npm run docker:run
 ```
+
+Note: Update the config section of the package.json file to change the name and platform.
+
+#### OR
 
 #### Pull image from Docker.io and run with the following::
 
@@ -95,6 +105,33 @@ docker run -d -p 3000:3000 --name salesforce-webex-sync --restart=always --env-f
 5. Scroll to the bottom and click Add Integration.
 6. Take a note of the Client ID and Client Secret for the environment file configuration above
 
+#### Setup Salesforce OAuth Integration:
+
+1. Navigate to this page to create a new Salesforce Integration using your Salesforce Account:
+   [https://login.salesforce.com/](https://login.salesforce.com/)
+2. Click on ``Setup``
+3. Click on ``Apps``
+4. Click on ``App Manager``
+5. Click on ``New Connected App``
+6. Fill out your intergration details, enter any name and decription and select any icon:
+   - For Callback URL, enter: http://localhost:3000/oauth
+      (or the url where you intend to deploy this code.  The app expects the url to end in ``/oauth``)
+   - For Selected OAuth Scopes, select only ``Manage user data via APIs (api)``
+      (or the scopes you intend to use for your integration)
+7. Click on ``Save``
+8. Once saved click on ``Manage Consumer Details``
+9. Take a note of the Consumer Key and Consumer Secret for the environment file configuration above
+10. Click on ``Manage`` at the top and then ``Edit Policies``
+11. Under ``OAuth Policies`` select ``All users may self-authorized``
+12. Under IP Relaxation, select ``Relax IP restrictions``
+13. Click on ``Save``
+14. Next select Settings > Identity > OAuth and OpenID Connect Settings.
+15. Under ``OAuth and OpenID Connect Settings`` select ``Allow OAuth Username-Password Flows``
+
+## Screenshots
+
+![Authenticated](https://github.com/sieteunoseis/salesforce-webex-contact-sync/blob/main/screenshots/authenticated.png?raw=true)
+
 ## License
 
 All contents are licensed under the MIT license. Please see [license](LICENSE) for details.
@@ -104,4 +141,4 @@ All contents are licensed under the MIT license. Please see [license](LICENSE) f
 
 If you would like to support my work and the time I put in creating the code, you can click the image below to get me a coffee. I would really appreciate it (but is not required).
 
-[Buy Me a Coffee](https://www.buymeacoffee.com/automatebldrs)
+<a href="https://www.buymeacoffee.com/automatebldrs" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>

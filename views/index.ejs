@@ -51,7 +51,9 @@
     <!-- Page Content-->
     <div class="container">
       <div class="form-check form-switch ms-auto mt-2 me-2 float-start">
-        <a href="http://www.automate.builders" class="text-decoration-none"><i class="fa-solid fa-robot"></i> Automate Builders</a>
+        <a href="http://www.automate.builders" class="text-decoration-none"
+          ><i class="fa-solid fa-robot"></i> Automate Builders</a
+        >
       </div>
       <div class="form-check form-switch ms-auto mt-2 me-2 float-end">
         <label class="form-check-label ms-3" for="lightSwitch">
@@ -80,9 +82,17 @@
       <div class="row justify-content-center mt-4 flex-nowrap">
         <div class="col-sm-auto">
           <% if (!integrationAuthentication) { %>
-            <a href="/oauth"><button type="button" class="btn btn-outline-primary">Authenticate with Webex</button></a>
+          <a href="/oauth"
+            ><button type="button" class="btn btn-outline-success">
+              Authenticate with Webex
+            </button></a
+          >
           <% } else { %>
-            <div class="text-bg-success p-3">Authenticate! 🎉</div>
+          <a href="/logout"
+            ><button type="button" class="btn btn-outline-warning">
+              Logout of Webex
+            </button></a
+          >
           <% } %>
         </div>
       </div>
@@ -97,8 +107,8 @@
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
       crossorigin="anonymous"
     ></script>
     <script
@@ -125,16 +135,17 @@
     ></script>
     <script src="js/codeEditor.js"></script>
     <script src="js/switch.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
-
-      socket.on('response', (data) => {
-        var string = codeEditor.getDoc().getValue()
-        var newMsg = ((string) ? string += '\r\n' + data.message : data.message);
-        codeEditor.getDoc().setValue(newMsg);
+      // Call the initial console data do not refresh if they haven logged in
+      $.ajax({
+        url: "/console", // URL of the server-side script
+        success: function (data) {
+          codeEditor.getDoc().setValue(data);
+        },
       });
-
     </script>
+    <% if (integrationAuthentication) { %>
+    <script src="js/terminalRefresh.js"></script>
+    <% } %>
   </body>
 </html>

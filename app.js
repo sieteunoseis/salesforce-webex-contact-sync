@@ -8,6 +8,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const fs = require("fs");
+const { engine } = require ('express-handlebars');
 
 const getVariables = require("./js/enVars.js");
 const getContacts = require("./js/contacts.js");
@@ -33,20 +34,20 @@ const authorizationURL =
 let integrationAuthentication;
 let task;
 
+//Sets our app to use the handlebars engine
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set("views", "./views");
+
 app.use(express.static(path.join(__dirname, "public")));
+  
 
 /* GET home page. */
 app.get("/", function (req, res, next) {
   if (integrationAuthentication == null) {
-    res.render("index", {
-      title: "Salesforce to Webex Contact Sync",
-      integrationAuthentication: false,
-    });
+    res.render('layouts', {layout : 'index', title: "Salesforce to Webex Contact Sync", needAuth: true});
   } else {
-    res.render("index", {
-      title: "Salesforce to Webex Contact Sync",
-      integrationAuthentication: true,
-    });
+    res.render('layouts', {layout : 'index', title: "Salesforce to Webex Contact Sync", needAuth: false});
   }
 });
 

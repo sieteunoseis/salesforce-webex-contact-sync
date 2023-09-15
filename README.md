@@ -31,7 +31,7 @@ Project then uses the access token to sync contacts from Salesforce to Webex.
 
 2. Rename the example environment file from `.env.example` to `.env`:
    ```
-   cp .env.example .env
+   cp env.example .env
    ```
 3. Configure the environment file for the Salesforce/Webex OAuth Integration.
    *Additional guide on where to get these values is below*
@@ -87,7 +87,7 @@ Note: Update the config section of the package.json file to change the name and 
 #### Pull image from Docker.io and run with the following::
 
 ```
-docker run -d -p 3000:3000 --name salesforce-webex-sync --restart=always --env-file=.env-v ./data:/app/data sieteunoseis/salesforce-webex-contact-sync:latest
+docker run -d -p 3000:3000 --name salesforce-webex-sync --restart=always --env-file=.env -v ./data:/app/data sieteunoseis/salesforce-webex-contact-sync:latest
 ```
 
 #### Setup Webex OAuth Integration:
